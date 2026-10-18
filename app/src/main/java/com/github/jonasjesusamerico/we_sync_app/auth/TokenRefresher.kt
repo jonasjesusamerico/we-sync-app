@@ -49,6 +49,19 @@ class TokenRefresher(
     }
 
     /**
+     * Ends the session on this device and returns the refresh token that was stored, so the caller can
+     * revoke it in the API. Serialized with [refresh], so an in-flight rotation cannot store a new token
+     * after this returns. Does not emit [signedOut]: the user asked for it and the screen navigates itself.
+     */
+    @Synchronized
+    fun clearSession(): String? {
+        val refreshToken = tokenStore.readRefreshToken()
+        tokenStore.clear()
+        accessToken = null
+        return refreshToken
+    }
+
+    /**
      * Refreshes the token pair. [staleAccessToken] is the access token the caller saw rejected; if
      * another caller already replaced it, the current token is returned without calling the API.
      */

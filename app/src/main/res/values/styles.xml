@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Design system typography, shapes and component styles (docs/design-system.md).
+     Components get these by default through the theme (values/themes.xml); set a style explicitly only for
+     a variant (e.g. Widget.WeSync.Button.Text). -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+
+    <!-- Typography. System font (Roboto); weight and size carry the hierarchy. -->
+    <style name="TextAppearance.WeSync.Amount" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textColor">@color/ws_amount</item>
+    </style>
+
+    <style name="TextAppearance.WeSync.Amount.Medium">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextAppearance.WeSync.Amount.Small">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.WeSync.Headline" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ws_amount</item>
+    </style>
+
+    <style name="TextAppearance.WeSync.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.WeSync.Section" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/ws_on_surface</item>
+    </style>
+
+    <style name="TextAppearance.WeSync.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/ws_on_surface</item>
+    </style>
+
+    <style name="TextAppearance.WeSync.BodySecondary" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/ws_on_surface_variant</item>
+    </style>
+
+    <style name="TextAppearance.WeSync.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/ws_on_surface_variant</item>
+    </style>
+
+    <style name="TextAppearance.WeSync.Label" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- Shapes. -->
+    <style name="ShapeAppearance.WeSync.Small" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_small</item>
+    </style>
+
+    <style name="ShapeAppearance.WeSync.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_medium</item>
+    </style>
+
+    <style name="ShapeAppearance.WeSync.Large" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_large</item>
+    </style>
+
+    <!-- Header band (toolbar on the brand color). -->
+    <style name="Widget.WeSync.AppBarLayout" parent="Widget.Material3.AppBarLayout">
+        <item name="android:background">@color/ws_brand</item>
+    </style>
+
+    <style name="Widget.WeSync.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/ws_brand</item>
+        <item name="titleTextColor">@color/ws_on_brand</item>
+        <item name="subtitleTextColor">@color/ws_on_brand</item>
+        <item name="navigationIconTint">@color/ws_on_brand</item>
+        <item name="titleTextAppearance">@style/TextAppearance.WeSync.Title</item>
+    </style>
+
+    <!-- Buttons. -->
+    <style name="Widget.WeSync.Button" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.WeSync.Label</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.WeSync.Medium</item>
+    </style>
+
+    <style name="Widget.WeSync.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.WeSync.Label</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.WeSync.Medium</item>
+    </style>
+
+    <style name="Widget.WeSync.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.WeSync.Label</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.WeSync.Medium</item>
+    </style>
+
+    <style name="Widget.WeSync.FloatingActionButton" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="backgroundTint">@color/ws_primary</item>
+        <item name="tint">@color/ws_on_primary</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.WeSync.Large</item>
+    </style>
+
+    <!-- Inputs: outlined field on a surface background. -->
+    <style name="Widget.WeSync.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/ws_surface</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.WeSync.Medium</item>
+    </style>
+
+    <!-- Dropdown (exposed dropdown menu) with the same look as the text fields; items: layout/item_dropdown. -->
+    <style name="Widget.WeSync.TextInputLayout.Dropdown" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">@color/ws_surface</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.WeSync.Medium</item>
+    </style>
+
+    <!-- Cards. -->
+    <style name="Widget.WeSync.Card" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardBackgroundColor">@color/ws_surface</item>
+        <item name="strokeColor">@color/ws_outline_variant</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.WeSync.Large</item>
+        <item name="contentPadding">@dimen/space_16</item>
+    </style>
+
+    <style name="Widget.WeSync.Card.Highlight" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/ws_highlight</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.WeSync.Medium</item>
+        <item name="contentPadding">@dimen/space_16</item>
+    </style>
+
+    <!-- Navigation drawer rows (layout/item_drawer_section, item_drawer_child). -->
+    <style name="Widget.WeSync.DrawerItem" parent="">
+        <item name="android:minHeight">56dp</item>
+        <item name="android:layout_marginHorizontal">@dimen/space_12</item>
+        <item name="android:paddingHorizontal">@dimen/space_16</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@drawable/bg_drawer_item</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="Widget.WeSync.DrawerItem.Child">
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">56dp</item>
+    </style>
+
+    <!-- Bottom navigation: selected item on a soft pill. -->
+    <style name="Widget.WeSync.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">@color/ws_surface</item>
+        <item name="itemIconTint">@color/ws_navigation_item</item>
+        <item name="itemTextColor">@color/ws_navigation_item</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.WeSync.BottomNavigation.ActiveIndicator</item>
+    </style>
+
+    <style name="Widget.WeSync.BottomNavigation.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/ws_primary_container</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.WeSync.Medium</item>
+    </style>
+</resources>

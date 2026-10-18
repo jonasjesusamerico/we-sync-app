@@ -1,4 +1,4 @@
-package com.github.jonasjesusamerico.we_sync_app.auth.ui
+package com.github.jonasjesusamerico.we_sync_app.core.ui
 
 import android.os.Bundle
 import androidx.annotation.IdRes

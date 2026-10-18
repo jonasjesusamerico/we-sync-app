@@ -11,6 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.github.jonasjesusamerico.we_sync_app.R
+import com.github.jonasjesusamerico.we_sync_app.core.ui.appContainer
+import com.github.jonasjesusamerico.we_sync_app.core.ui.collectWhileStarted
+import com.github.jonasjesusamerico.we_sync_app.core.ui.navigateFrom
 import com.github.jonasjesusamerico.we_sync_app.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -54,8 +57,7 @@ class LoginFragment : Fragment() {
         collectWhileStarted(viewModel.state) { state ->
             binding.layoutEmail.error = state.emailError?.let { getString(it.textRes()) }
             binding.layoutPassword.error = state.passwordError?.let { getString(it.textRes()) }
-            binding.textMessage.isVisible = state.message != null
-            state.message?.let { binding.textMessage.setText(it.textRes) }
+            binding.textMessage.showAuthMessage(state.message)
             binding.progress.isVisible = state.isLoading
             binding.buttonLogin.isEnabled = !state.isLoading
             binding.buttonGoToSignUp.isEnabled = !state.isLoading

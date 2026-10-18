@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+<!-- Design system colors (docs/design-system.md). Layouts and code never use hex values: they use theme
+     attributes (?attr/colorPrimary, ...) or, for brand-specific roles, the semantic ws_* colors below.
+     Dark values live in values-night/colors.xml with the same names. -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+    <!-- Brand: header bands and money emphasis. -->
+    <color name="ws_brand">#1F3F80</color>
+    <color name="ws_on_brand">#FFFFFF</color>
+    <color name="ws_amount">#1F3F80</color>
+
+    <!-- Actions (buttons, FAB, focused fields). -->
+    <color name="ws_primary">#2F5BB7</color>
+    <color name="ws_on_primary">#FFFFFF</color>
+    <color name="ws_primary_container">#E6EDFA</color>
+    <color name="ws_on_primary_container">#1F3F80</color>
+
+    <!-- Surfaces and text. -->
+    <color name="ws_background">#F6F7FB</color>
+    <color name="ws_surface">#FFFFFF</color>
+    <color name="ws_surface_variant">#EEF1F7</color>
+    <color name="ws_on_surface">#1B2130</color>
+    <color name="ws_on_surface_variant">#5E6577</color>
+    <color name="ws_outline">#C9CFDC</color>
+    <color name="ws_outline_variant">#E1E5EE</color>
+
+    <!-- Feedback and finance. -->
+    <color name="ws_error">#C62828</color>
+    <color name="ws_on_error">#FFFFFF</color>
+    <color name="ws_positive">#2E7D32</color>
+    <color name="ws_negative">#C62828</color>
+
+    <!-- Highlight card (dark band with gold accent). -->
+    <color name="ws_highlight">#33353D</color>
+    <color name="ws_on_highlight">#FFFFFF</color>
+    <color name="ws_highlight_accent">#E9B949</color>
 </resources>

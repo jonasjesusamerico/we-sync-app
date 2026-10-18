@@ -13,6 +13,7 @@ internal class FakeAuthRepository : AuthRepository {
     var loginCalls = 0
     var registerCalls = 0
     var restoreCalls = 0
+    var logoutCalls = 0
 
     override suspend fun login(email: String, password: String): AuthResult {
         loginCalls++
@@ -27,5 +28,9 @@ internal class FakeAuthRepository : AuthRepository {
     override suspend fun restoreSession(): RefreshResult {
         restoreCalls++
         return restoreResult.await()
+    }
+
+    override suspend fun logout() {
+        logoutCalls++
     }
 }

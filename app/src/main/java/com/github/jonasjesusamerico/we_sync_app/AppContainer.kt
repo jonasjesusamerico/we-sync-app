@@ -8,6 +8,11 @@ import com.github.jonasjesusamerico.we_sync_app.auth.KeystoreTokenStore
 import com.github.jonasjesusamerico.we_sync_app.auth.RemoteAuthRepository
 import com.github.jonasjesusamerico.we_sync_app.auth.TokenAuthenticator
 import com.github.jonasjesusamerico.we_sync_app.auth.TokenRefresher
+import com.github.jonasjesusamerico.we_sync_app.purchase.PurchaseRepository
+import com.github.jonasjesusamerico.we_sync_app.purchase.RemotePurchaseRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -19,6 +24,9 @@ import java.util.concurrent.TimeUnit
 /** Manual dependency composition, built once by [WeSyncApplication]. */
 class AppContainer(context: Context) {
     private val json = Json { ignoreUnknownKeys = true }
+
+    /** Work that must finish even if the screen that started it is gone (e.g. token revocation on logout). */
+    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     // Login and sign-up run bcrypt on the server and may queue under load, hence the long read timeout.
     private val publicHttpClient = OkHttpClient.Builder()
@@ -35,11 +43,24 @@ class AppContainer(context: Context) {
 
     val tokenRefresher = TokenRefresher(authApi, KeystoreTokenStore(context))
 
-    val authRepository: AuthRepository = RemoteAuthRepository(authApi, tokenRefresher, json)
+    val authRepository: AuthRepository = RemoteAuthRepository(authApi, tokenRefresher, json, applicationScope)
 
     /** Client for the authenticated endpoints: sends the bearer token and refreshes it on 401. */
     val authenticatedHttpClient: OkHttpClient = publicHttpClient.newBuilder()
         .addInterceptor(AuthInterceptor(tokenRefresher))
         .authenticator(TokenAuthenticator(tokenRefresher))
         .build()
+
+    private val authenticatedRetrofit: Retrofit = Retrofit.Builder()
+        .baseUrl(BuildConfig.API_BASE_URL)
+        .client(authenticatedHttpClient)
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        .build()
+
+    val purchaseRepository: PurchaseRepository = RemotePurchaseRepository(
+        categoryApi = authenticatedRetrofit.create(),
+        paymentMethodApi = authenticatedRetrofit.create(),
+        purchaseApi = authenticatedRetrofit.create(),
+        json = json,
+    )
 }

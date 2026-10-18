@@ -2,7 +2,9 @@ package com.github.jonasjesusamerico.we_sync_app.auth
 
 import com.github.jonasjesusamerico.we_sync_app.core.network.parseApiError
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
@@ -35,12 +37,20 @@ interface AuthRepository {
 
     /** Restores the stored session at app start. */
     suspend fun restoreSession(): RefreshResult
+
+    /**
+     * Signs out: the session is removed from the device before this returns (works offline); revoking the
+     * refresh token in the API continues in the background and is best effort.
+     */
+    suspend fun logout()
 }
 
 class RemoteAuthRepository(
     private val api: AuthApi,
     private val refresher: TokenRefresher,
     private val json: Json,
+    /** Outlives the screens, so the revocation is not cancelled when the user leaves Home. */
+    private val backgroundScope: CoroutineScope,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : AuthRepository {
 
@@ -66,6 +76,17 @@ class RemoteAuthRepository(
 
     override suspend fun restoreSession(): RefreshResult = withContext(ioDispatcher) {
         refresher.refresh(staleAccessToken = null)
+    }
+
+    override suspend fun logout() {
+        val refreshToken = withContext(ioDispatcher) { refresher.clearSession() } ?: return
+        backgroundScope.launch(ioDispatcher) {
+            // Failure is ignored on purpose: the token is already gone from the device and expires in the API.
+            call {
+                api.logout(RefreshRequest(refreshToken))
+                AuthResult.Success
+            }
+        }
     }
 
     private inline fun call(block: () -> AuthResult): AuthResult = try {

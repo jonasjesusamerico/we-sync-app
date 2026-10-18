@@ -17,6 +17,10 @@ interface AuthApi {
     /** Blocking call: it runs on OkHttp's thread inside [TokenAuthenticator] and on an IO thread at startup. */
     @POST("auth/refresh")
     fun refresh(@Body body: RefreshRequest): Call<TokenResponse>
+
+    /** Revokes the refresh token; `204` also for unknown or already revoked tokens. */
+    @POST("auth/logout")
+    suspend fun logout(@Body body: RefreshRequest)
 }
 
 @Serializable

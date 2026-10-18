@@ -1,9 +1,48 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
+    <!-- App theme: maps the design system (colors.xml, styles.xml) onto Material 3 roles, so standard
+         components pick it up without per-view styling. Dark mode comes from values-night/colors.xml. -->
     <style name="Base.Theme.Wesyncapp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/ws_primary</item>
+        <item name="colorOnPrimary">@color/ws_on_primary</item>
+        <item name="colorPrimaryContainer">@color/ws_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/ws_on_primary_container</item>
+        <item name="colorSecondary">@color/ws_brand</item>
+        <item name="colorOnSecondary">@color/ws_on_brand</item>
+        <item name="colorSecondaryContainer">@color/ws_primary_container</item>
+        <item name="colorOnSecondaryContainer">@color/ws_on_primary_container</item>
+        <item name="android:colorBackground">@color/ws_background</item>
+        <item name="colorOnBackground">@color/ws_on_surface</item>
+        <item name="colorSurface">@color/ws_surface</item>
+        <item name="colorOnSurface">@color/ws_on_surface</item>
+        <item name="colorSurfaceVariant">@color/ws_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/ws_on_surface_variant</item>
+        <item name="colorOutline">@color/ws_outline</item>
+        <item name="colorOutlineVariant">@color/ws_outline_variant</item>
+        <item name="colorError">@color/ws_error</item>
+        <item name="colorOnError">@color/ws_on_error</item>
+
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.WeSync.Headline</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.WeSync.Title</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.WeSync.Section</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.WeSync.Body</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.WeSync.BodySecondary</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.WeSync.Caption</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.WeSync.Label</item>
+
+        <item name="appBarLayoutStyle">@style/Widget.WeSync.AppBarLayout</item>
+        <item name="toolbarStyle">@style/Widget.WeSync.Toolbar</item>
+        <item name="materialButtonStyle">@style/Widget.WeSync.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.WeSync.Button.Outlined</item>
+        <item name="borderlessButtonStyle">@style/Widget.WeSync.Button.Text</item>
+        <item name="floatingActionButtonStyle">@style/Widget.WeSync.FloatingActionButton</item>
+        <item name="textInputStyle">@style/Widget.WeSync.TextInputLayout</item>
+        <item name="materialCardViewStyle">@style/Widget.WeSync.Card</item>
+        <item name="bottomNavigationStyle">@style/Widget.WeSync.BottomNavigation</item>
     </style>
 
-    <style name="Theme.Wesyncapp" parent="Base.Theme.Wesyncapp" />
+    <style name="Theme.Wesyncapp" parent="Base.Theme.Wesyncapp">
+        <!-- Transparent system bars for edge-to-edge; the header band draws behind the status bar. -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 </resources>

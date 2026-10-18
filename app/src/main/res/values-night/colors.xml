@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dark theme values of values/colors.xml. -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+    <color name="ws_brand">#16264A</color>
+    <color name="ws_on_brand">#E6EAF5</color>
+    <color name="ws_amount">#B8CBF7</color>
+
+    <color name="ws_primary">#9DB6F2</color>
+    <color name="ws_on_primary">#0B1D46</color>
+    <color name="ws_primary_container">#233866</color>
+    <color name="ws_on_primary_container">#DCE5FB</color>
+
+    <color name="ws_background">#0F131C</color>
+    <color name="ws_surface">#171C27</color>
+    <color name="ws_surface_variant">#232A38</color>
+    <color name="ws_on_surface">#E4E7EF</color>
+    <color name="ws_on_surface_variant">#A6ADBD</color>
+    <color name="ws_outline">#4A5266</color>
+    <color name="ws_outline_variant">#2A3141</color>
+
+    <color name="ws_error">#FF8A80</color>
+    <color name="ws_on_error">#5C0A0A</color>
+    <color name="ws_positive">#81C784</color>
+    <color name="ws_negative">#FF8A80</color>
+
+    <color name="ws_highlight">#262830</color>
+    <color name="ws_on_highlight">#F2F2F4</color>
+    <color name="ws_highlight_accent">#E9B949</color>
+</resources>

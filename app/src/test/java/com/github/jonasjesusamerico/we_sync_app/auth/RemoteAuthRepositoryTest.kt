@@ -1,12 +1,18 @@
 package com.github.jonasjesusamerico.we_sync_app.auth
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.test.runTest
+import mockwebserver3.MockResponse
 import mockwebserver3.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
+import java.util.concurrent.TimeUnit
 
 class RemoteAuthRepositoryTest {
     private val server = MockWebServer()
@@ -14,16 +20,20 @@ class RemoteAuthRepositoryTest {
     private lateinit var refresher: TokenRefresher
     private lateinit var repository: RemoteAuthRepository
 
+    // Revocation runs here on real threads, like the app's application scope.
+    private val backgroundScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
     @Before
     fun setUp() {
         server.start()
         val api = server.authApi()
         refresher = TokenRefresher(api, store)
-        repository = RemoteAuthRepository(api, refresher, testJson)
+        repository = RemoteAuthRepository(api, refresher, testJson, backgroundScope)
     }
 
     @After
     fun tearDown() {
+        backgroundScope.cancel()
         server.close()
     }
 
@@ -115,7 +125,7 @@ class RemoteAuthRepositoryTest {
     fun login_whenSessionCannotBeStored_isUnexpected() = runTest {
         server.enqueue(tokens(access = "access-1", refresh = "refresh-1"))
         val api = server.authApi()
-        val repository = RemoteAuthRepository(api, TokenRefresher(api, FailingTokenStore()), testJson)
+        val repository = RemoteAuthRepository(api, TokenRefresher(api, FailingTokenStore()), testJson, backgroundScope)
 
         assertEquals(AuthResult.Unexpected, repository.login("user@example.com", "12345678"))
     }
@@ -124,8 +134,40 @@ class RemoteAuthRepositoryTest {
     fun restoreSession_whenSessionCannotBeStored_isFailed() = runTest {
         server.enqueue(tokens(access = "access-2", refresh = "refresh-2"))
         val api = server.authApi()
-        val repository = RemoteAuthRepository(api, TokenRefresher(api, FailingTokenStore()), testJson)
+        val repository = RemoteAuthRepository(api, TokenRefresher(api, FailingTokenStore()), testJson, backgroundScope)
 
         assertEquals(RefreshResult.Failed, repository.restoreSession())
+    }
+
+    @Test
+    fun logout_clearsSessionAndRevokesToken() = runTest {
+        refresher.startSession(TokenResponse("access-1", "refresh-1", "Bearer"))
+        server.enqueue(MockResponse.Builder().code(204).build())
+
+        repository.logout()
+
+        assertNull(store.refreshToken)
+        assertNull(refresher.accessToken)
+        val request = server.takeRequest(5, TimeUnit.SECONDS)!!
+        assertEquals("/api/v1/auth/logout", request.url.encodedPath)
+        assertEquals("""{"refresh_token":"refresh-1"}""", request.body?.utf8())
+    }
+
+    @Test
+    fun logout_offline_stillClearsSession() = runTest {
+        refresher.startSession(TokenResponse("access-1", "refresh-1", "Bearer"))
+        server.close()
+
+        repository.logout()
+
+        assertNull(store.refreshToken)
+        assertNull(refresher.accessToken)
+    }
+
+    @Test
+    fun logout_withoutSession_doesNotCallApi() = runTest {
+        repository.logout()
+
+        assertNull(server.takeRequest(300, TimeUnit.MILLISECONDS))
     }
 }

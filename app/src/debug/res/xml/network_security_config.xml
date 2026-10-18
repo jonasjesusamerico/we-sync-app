@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Debug only: cleartext HTTP to the local API (emulator host alias and adb reverse). -->
+<!-- Debug only: cleartext HTTP to the local API (emulator host alias, adb reverse and the dev notebook on the LAN). -->
 <network-security-config>
     <base-config cleartextTrafficPermitted="false" />
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="false">10.0.2.2</domain>
         <domain includeSubdomains="false">localhost</domain>
+        <!-- Dev notebook running docker compose; keep in sync with api.baseUrl in local.properties. -->
+        <domain includeSubdomains="false">192.168.68.59</domain>
     </domain-config>
 </network-security-config>

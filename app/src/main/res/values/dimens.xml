@@ -1,3 +1,23 @@
-<resources>
-    <dimen name="fab_margin">16dp</dimen>
+<!-- Design system spacing and sizes (docs/design-system.md). Use these instead of literal dp values. -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+    <!-- Spacing scale (4dp grid). -->
+    <dimen name="space_4">4dp</dimen>
+    <dimen name="space_8">8dp</dimen>
+    <dimen name="space_12">12dp</dimen>
+    <dimen name="space_16">16dp</dimen>
+    <dimen name="space_24">24dp</dimen>
+    <dimen name="space_32">32dp</dimen>
+    <dimen name="space_48">48dp</dimen>
+
+    <!-- Corner radius. -->
+    <dimen name="radius_small">8dp</dimen>
+    <dimen name="radius_medium">12dp</dimen>
+    <dimen name="radius_large">16dp</dimen>
+
+    <!-- Components. -->
+    <dimen name="button_height">52dp</dimen>
+    <dimen name="screen_padding">@dimen/space_24</dimen>
+    <!-- Bottom padding of scrolling content so the last item is not hidden behind the FAB. -->
+    <dimen name="fab_clearance">88dp</dimen>
+    <dimen name="drawer_width">300dp</dimen>
 </resources>

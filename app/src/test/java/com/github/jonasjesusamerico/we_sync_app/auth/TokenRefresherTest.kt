@@ -88,6 +88,16 @@ class TokenRefresherTest {
     }
 
     @Test
+    fun clearSession_returnsStoredTokenAndForgetsSession() {
+        refresher.startSession(TokenResponse("access-1", "refresh-1", "Bearer"))
+
+        assertEquals("refresh-1", refresher.clearSession())
+        assertNull(store.refreshToken)
+        assertNull(refresher.accessToken)
+        assertEquals(RefreshResult.NoSession, refresher.refresh(null))
+    }
+
+    @Test
     fun concurrentUnauthorizedCalls_triggerASingleRefresh() {
         store.refreshToken = "refresh-1"
         refresher.startSession(TokenResponse("access-old", "refresh-1", "Bearer"))

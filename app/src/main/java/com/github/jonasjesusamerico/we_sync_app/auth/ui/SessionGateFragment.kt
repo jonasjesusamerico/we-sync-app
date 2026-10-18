@@ -10,6 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.github.jonasjesusamerico.we_sync_app.R
+import com.github.jonasjesusamerico.we_sync_app.core.ui.appContainer
+import com.github.jonasjesusamerico.we_sync_app.core.ui.collectWhileStarted
+import com.github.jonasjesusamerico.we_sync_app.core.ui.navigateFrom
 import com.github.jonasjesusamerico.we_sync_app.databinding.FragmentSessionGateBinding
 
 class SessionGateFragment : Fragment() {
